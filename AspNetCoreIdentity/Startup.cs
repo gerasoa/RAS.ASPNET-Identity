@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreIdentity.Areas.Identity.Data;
+using AspNetCoreIdentity.Extension;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +47,20 @@ namespace AspNetCoreIdentity
                 .AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4)    
                 .AddEntityFrameworkStores<AspNetCoreIdentityContext>();
 
+            //Configuring the Claims
+            services.AddAuthorization(options =>
+            {
+                //Handler by ASP.Net
+                options.AddPolicy("AuthorizedDelete", policy => policy.RequireClaim("AuthorizedDelete"));
+
+                //When I create a Requiriment (NecessessaryPermission) this is my responsability create a Handle
+                options.AddPolicy("Write", policy => policy.Requirements.Add(new NecessessaryPermission("Write"))); //Claims 
+                options.AddPolicy("Read", policy => policy.Requirements.Add(new NecessessaryPermission("Read"))); //Claims
+            });
+
+
+            //Register the class by Interface
+            services.AddSingleton<IAuthorizationHandler, NecessessaryPermissionHandler>(); //Claims
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -66,6 +82,7 @@ namespace AspNetCoreIdentity
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
 
             //Identity configured in the application
             app.UseAuthentication();

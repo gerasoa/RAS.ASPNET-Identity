@@ -29,6 +29,20 @@ namespace AspNetCoreIdentity.Controllers
             return View();
         }
 
+        //Claim
+        [Authorize(Policy = "AuthorizedDelete")]
+        public IActionResult SecretClaim()
+        {
+            return View();
+        }
+
+        //Claim
+        [Authorize(Policy = "Write")]
+        public IActionResult SecretClaimWrite()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
