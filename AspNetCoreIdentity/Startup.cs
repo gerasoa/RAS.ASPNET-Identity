@@ -41,6 +41,7 @@ namespace AspNetCoreIdentity
 
             //Configuring the Identity on the application            
             services.AddDefaultIdentity<IdentityUser>() 
+                .AddRoles<IdentityRole>() //This key suport is apply when we implement Authorization
                 .AddDefaultUI(Microsoft.AspNetCore.Identity.UI.UIFramework.Bootstrap4)    
                 .AddEntityFrameworkStores<AspNetCoreIdentityContext>();
 
