@@ -13,3 +13,11 @@ After to configure ASP.Net Identity in the Startup
 Create migration:
 add-migration Identity
 update-database
+
+
+Authentication:
+Implemented Authorize and AllowAnonymous in the Controller
+
+Authorization:
+
+Claims
