@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreIdentity.Models;
 using Microsoft.AspNetCore.Authorization;
+using AspNetCoreIdentity.Extension;
 
 namespace AspNetCoreIdentity.Controllers
 {
@@ -42,6 +43,14 @@ namespace AspNetCoreIdentity.Controllers
         {
             return View();
         }
+
+        //Curdston Claims Authentication
+        [ClaimsAuthorizeAttribute("Product", "Read")]
+        public IActionResult SecretClaimCustomWrite()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
